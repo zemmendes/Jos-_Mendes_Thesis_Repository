@@ -1,0 +1,19 @@
+%!TEX root = ../dissertation.tex
+
+\begin{otherlanguage}{english}
+\begin{abstract}
+% Set the page style to show the page number
+\thispagestyle{plain}
+\abstractEnglishPageNumber
+
+Deep generative models are increasingly used to integrate heterogeneous biological data and generate synthetic profiles, but their practical value depends not only on their accuracy but also on whether newly generated data can be reliably trusted. This thesis studies uncertainty estimation in a variational autoencoder-based multi-omic model for cancer cell line data. The analysis focuses on the Multi-Omic Synthetic Augmentation (MOSA) model framework, which integrates and reconstructs seven biological and phenotypic layers. Two main sources of predictive uncertainty are examined. Firstly, Latent Space Sampling is used to characterise the aleatoric uncertainty encoded by the variational representation and propagated through the decoder. Secondly, Monte Carlo Dropout is used as an approximate Bayesian method to estimate epistemic uncertainty associated with the model's parameters. The resulting predictive distributions are evaluated using complementary metrics for sharpness, calibration and proper scoring rules. Results are compared both across omics and between in-sample and out-of-sample reconstructions, highlighting how uncertainty behaviour depends on data modality, missingness and reconstruction difficulty. The findings show that uncertainty estimates are informative but uneven across datasets, with several out-of-sample settings exhibiting overconfident predictions. This work provides a structured evaluation of uncertainty in multi-omic synthetic data augmentation and identifies potential limitations in the application of generative models to biological data.
+
+% Keywords
+\begin{flushleft}
+
+\keywords{deep learning, uncertainty estimation, variational autoencoders, multi-omics integration, synthetic biological data}
+
+\end{flushleft}
+
+\end{abstract}
+\end{otherlanguage}

@@ -1,0 +1,17 @@
+%!TEX root = ../dissertation.tex
+
+\begin{otherlanguage}{portuguese}
+\begin{abstract}
+\abstractPortuguesePageNumber
+Os modelos generativos profundos são cada vez mais utilizados para integrar dados biológicos heterogéneos e gerar perfis sintéticos, mas o seu valor prático depende não só da sua precisão, como também da fiabilidade atribuível aos dados recém-gerados. Esta tese estuda a estimativa da incerteza num modelo multi-ómico baseado num \textit{autoencoder} variacional para dados de linhas celulares cancerígenas. A análise centra-se no \textit{framework} do modelo \textit{Multi-Omic Synthetic Augmentation} (MOSA), que integra e reconstrói sete camadas biológicas e fenotípicas. São examinadas duas fontes principais de incerteza preditiva. Em primeiro lugar, a amostragem do espaço latente é utilizada para caracterizar a incerteza aleatórica codificada pela representação variacional e propagada através do \textit{decoder}. Em segundo lugar, o \textit{dropout} de \textit{Monte Carlo} é utilizado como método Bayesiano aproximado para estimar a incerteza epistémica associada aos parâmetros do modelo. As distribuições preditivas resultantes são avaliadas através de métricas complementares de \textit{sharpness}, calibração e \textit{proper scoring rules}. Os resultados são comparados entre diferentes ómicas e entre reconstruções dentro e fora da amostra de treino, destacando de que forma o comportamento da incerteza depende da modalidade dos dados, da presença de dados em falta e da dificuldade de reconstrução. Os resultados mostram que as estimativas de incerteza são informativas, mas agem de forma diferente entre os conjuntos de dados, com várias configurações fora da amostra a exibirem previsões confiantes demais. Este trabalho fornece uma avaliação estruturada da incerteza no aumento sintético de dados multi-ómicos e identifica potenciais limitações nas aplicações de modelos generativos a dados biológicos.
+
+% Keywords
+\begin{flushleft}
+
+\keywords{aprendizagem profunda, estimativa de incerteza, autoencoders variacionais, integração multiomica, dados biológicos sintéticos}
+
+
+\end{flushleft}
+
+\end{abstract}
+\end{otherlanguage}

@@ -1,0 +1,89 @@
+%Explain what was done to the data:
+%   - 
+
+%Intro to this chapter:
+%   - Explain that there are 7 datasets each relating to a different omic (explain what an omic is)
+%   - Explain where each of the datasets com from (The cancer dependency map [DepMap] project), with some coming from Sanger and some from Broad institute. Explain that while they may be from different institutions that they are part of a big project and thus equally valid.
+%Explain nature of data:
+%   - Cancer cell line models of dif omics
+%   - how they are obtained
+%   - What they are used for
+%   - Make a clear link between the omics. While they are different parts of a cell they still affect each other.
+%   - 
+%Outline the 7 datasets:
+%   - Explain what the data means (omic, etc)
+%   - Identify the number of features, cols, the type of %data, range of values, etc
+%   -  Make a table for this like: Omic name, data %description (e.g. what is CRISPR-Cas9), data type, dataset %dimensions,data source (sanger or broad)
+%
+%
+%
+%
+
+
+\chapter{Description of the Data and Data Transformations} \label{chapter:Data} \label{chapter:Data_Description}
+
+
+This chapter outlines the origin and characteristics of the seven datasets used in this dissertation along with the data transformations applied to allow for the calculation of the metrics described in Chapter \ref{chapter:Uncertainty_Estimation}.
+
+The datasets here described are primarily derived from the Cancer Dependency Map (DepMap) project. This project is a collaborative initiative between the Broad Institute in MIT and Harvard, and the Wellcome Sanger Institute in the United Kingdom. It aims to systematically profile the genetic landscape and phenotypic vulnerabilities of thousands of cancer cell line models. By centralizing clinical, genetic and functional data the consortium provides a robust framework for investigating cancer dependencies and prioritizing therapeutic targets. 
+
+
+The multi-omic integration strategy encompasses seven distinct biological and phenotypic layers, ranging from the fundamental genetic code to functional responses to perturbations. Together, these seven datasets encompass 1,523 cancer cell line models, each spanning at least two omics. Of these 1,523, 25.8 percent of the cell lines are present in all seven datasets.
+
+Transcriptomics data provides information on mRNA gene expression for over 15,000 genes, acting as a primary indicator of cellular activity. This dataset is gathered from both the Sanger and Broad Institutes, utilizing RNA-seq measurements that are typically reported as Transcripts Per Million (TPM) and log2-transformed to represent a continuous distribution.
+
+Methylation profiling focuses on DNA methylation, an epigenetic mechanism involving the addition of a methyl group to cytosine. This is essential for understanding gene silencing and regulation. Sourced from the Sanger Institute and measured using the Illumina Human Methylation 450 BeadChip, the data is reported as beta values ranging from zero, hypomethylated, to one, hypermethylated. This layer includes 14,608 genes across 906 cell lines.
+
+Proteomics measures the relative abundance of thousands of proteins across cell lines using mass spectrometry. Specifically, the ProCan-DepMapSanger dataset utilizes Data Independent Acquisition (DIA) and the DIA-NN tool to provide a relative protein quantitation. This layer is particularly challenging due to high missing values (often exceeding 30 percent) resulting from technical limitations in detecting lowly abundant proteins. The proteomics dataset includes 4,922 genes across 949 cell lines.
+
+Metabolomics characterises the intracellular metabolites that act as catalysts and products of cellular activity. Profiling of 225 polar and lipid species is performed using liquid chromatography-mass spectrometry (LC-MS). This resource, originally published by the Broad Institute, provides insights into the metabolic diversity of cancer across more than 20 cancer types for 900 cell lines.
+
+Drug Response represents a phenotypic layer measuring the sensitivity of cell lines to various compounds, expressed as the IC50 (the concentration required to inhibit a biological process by half). The data is collated from the GDSC1 and GDSC2 screens, representing a spectrum of common and rare adult and childhood cancers. This dataset contains information for 810 drugs across 993 cell lines.
+
+CRISPR-Cas9 data captures gene essentiality or "fitness scores" derived from genome-scale knockout screens where a gene is classified as essential if its removal leads to cell death. The datasets from Sanger and Broad are combined and batch-corrected using ComBat to account for differences in library design and assay length. This layer encompasses 17,931 gene fitness scores for 992 cell lines.
+
+Copy number alterations form a crucial component of the genomics layer, measuring somatic copy number alterations (SCNA) such as gene amplifications and deletions. These alterations are detected by integrating Whole Exome Sequencing (WES) data through the GATK CNV pipeline and PureCN software. For integration within the MOSA framework, total Copy number values are categorised into five ordinal states: deletion, loss, neutral, gain, or amplification. This dataset encompasses 777 features for 1,198 cell lines.
+
+A summary of the key information of these seven datasets can be seen in table \ref{tab:datasets_description}.
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{|>{\centering\arraybackslash}m{2.2cm}|>{\centering\arraybackslash}m{2.9cm}|>{\centering\arraybackslash}m{1.6cm}|>{\centering\arraybackslash}m{2.1cm}|>{\centering\arraybackslash}m{1.8cm}|>{\centering\arraybackslash}m{1.8cm}|}
+\hline
+\textbf{Omic} & \textbf{Data Description} & \textbf{Features \& Samples} & \textbf{Percentage of Missing Value} & \textbf{Data Type} & \textbf{Data Source} \\ \hline
+Transcriptomics & mRNA gene expression levels & 15,278 $\times$ 1,240 & 0\% & Continuous & Sanger \& Broad \cite{GarciaAlonso2018} \\ \hline
+Methylation & DNA methylation beta values & 14,608 $\times$ 906 & 0\% & Continuous & Sanger \cite{Iorio2016} \\ \hline
+Proteomics & Relative protein abundance & 4,922 $\times$ 949 & 47.92\% & Continuous & Sanger \cite{Goncalves2022} \\ \hline
+Metabolomics & Intracellular metabolite levels & 225 $\times$ 900 & 9.29\% & Continuous & Broad \cite{Li2019} \\ \hline
+Drug Response & Compound sensitivity (IC50) & 810 $\times$ 993 & 25.81\% & Continuous & Sanger \cite{Yang2013,Iorio2016} \\ \hline
+CRISPR-Cas9 & Gene essentiality fitness scores & 17,931 $\times$ 992 & 0.94\% & Continuous & Sanger \& Broad \cite{Behan2019} \\ \hline
+Copy number & Somatic copy number alterations & 777 $\times$ 1,198 & 2.55\% & Categorical & Sanger \& Broad \cite{Iorio2016} \\ \hline
+\end{tabular}
+\caption{Table outlining the seven dataset's key characteristics.}
+\label{tab:datasets_description}
+\end{table}
+
+
+
+Due to the different natures of the datasets used, transformations to the data was required before the uncertainty quantification metrics could be calculated. These transformations were applied to both enable and simplify the analysis of each individual omic, while also allowing for these results to be compared consistently across omics. 
+
+For each of the omics described in the previous section, other than the raw data, there are three additional datasets that also underwent these transformations. Firstly, there is a deterministic model reconstruction of the data which corresponds to the model's reconstruction output. These output datasets have the same number of features as the corresponding raw datasets while having all the cell lines reconstructed, thus having 1,523 observations each. Additionally, there are two three-dimensional datasets, one for each of the sampling methods described in chapter \ref{chapter:Uncertainty_Estimation}. These datasets have the same feature and observation dimensions as their deterministic reconstruction counterparts, with the 100 sampled reconstructions stored along the third axis. 
+
+The first transformation applied to the data was the standardization of cell line model identifiers. Depending on the dataset's origin, cell lines can be identified using either a Sanger identifier, formatted as SIDM-\textit{5 digits}, or a Broad identifier, formatted as ACH-\textit{6 digits}. In some cases, data originating from the Broad Institute can also use a Sanger identifier. To ensure that observations could be matched consistently across all datasets, all cell line identifiers were standardised using the Sanger ID format. Standardising all observations to a single identifier format allows the raw observations, deterministic reconstructions and sampled reconstruction outputs to be aligned and compared correctly across omics.
+
+Another transformation applied to the data was a scaling of the original CRISPR-Cas9 dataset so that it better matched the scale of the deterministic and sampled reconstructions. This scaling was applied to the CRISPR-Cas9 data before it was used as input to the \gls{MOSA} model with the aim of improving the quality of the reconstructed CRISPR-Cas9 values. The transformation used reference behaviour from essential and non-essential genes. For each gene $j$, the median value among essential genes was denoted by $m^{(e)}_j$, and the median value among non-essential genes was denoted by $m^{(n)}_j$. Each original value $x_{ij}$, corresponding to sample $i$ and gene $j$, was then rescaled as seen below.
+
+\begin{equation}
+   x'_{ij} = \frac{x_{ij} - m^{(n)}_j}{m^{(n)}_j - m^{(e)}_j}.
+\end{equation}
+
+This centres the CRISPR-Cas9 data around the non-essential reference and scales it according to the separation between the non-essential and essential gene references. Applying this transformation to the original dataset ensures all CRISPR-Cas9 datasets used share a common scale.
+
+To allow for simpler analysis and to allow for better comparison between omics, Z-score standardization was then applied to all continuous datasets. For a value $x_{ij}$ from sample $i$ and feature $j$, the standardized value was calculated as
+
+\begin{equation}
+   x_{ij}^{std} = \frac{x_{ij} - \mu_j}{\sigma_j},
+\end{equation}
+
+where $\mu_j$ and $\sigma_j$ are the mean and standard deviation of feature $j$ in the corresponding original dataset. The same transformation was also applied to the deterministic reconstruction and sampled reconstruction datasets, using the mean and standard deviation calculated from the original data rather than recalculating these statistics separately for each reconstruction. This was done to preserve a common reference scale between the observed data and the reconstructed datasets.

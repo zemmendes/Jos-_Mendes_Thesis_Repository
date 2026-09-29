@@ -1,0 +1,35 @@
+%!TEX root = ../dissertation.tex
+
+\chapter{Introduction}
+\label{chapter:introduction}
+
+\section{Motivation}
+
+Machine learning, and deep learning in particular, has increasingly become a central component of research. Its rapid development has changed how complex patterns are extracted from large datasets, with deep neural networks now reaching, and in some tasks surpassing, human performance. This success is largely due to their ability to learn representations directly from data, reducing the dependence on manually designed features and making them suitable for problems in which the underlying relationships are high-dimensional, non-linear and difficult to specify explicitly.
+
+These traits are especially relevant in biomedical research, where biological systems are rarely explained by a single source of information and where the amount of available data is often limited by experimental cost, sample availability and technical constraints. In cancer, a sample can be characterized at several molecular and phenotypic levels. Although any single layer can be highly informative, it captures only one aspect of the processes that shape cancer cell behaviour. Genomic data, for example, describes the structure, function and variation of the genome, but it does not fully explain how genetic alterations are regulated, expressed or translated into cellular phenotypes. Other molecular layers therefore provide complementary information that is necessary to build a more complete view of cancer biology. Each omic layer offers a partial view of the disease, but none is sufficient on its own to describe the full biological profile of a cancer model. Since cancer emerges from the complex interactions between these molecular levels and their environment, relevant mechanisms may only become apparent when different sources of data are considered jointly.
+
+Biological data integration is therefore fundamental for a holistic understanding of cancer biology. Integrated multi-omic datasets make it possible to relate molecular alterations to gene regulation, cellular function and treatment response, supporting the identification of disease mechanisms, biomarkers and potential therapeutic targets. This is particularly important for cancer cell lines, which are widely used experimental models for studying tumour biology and for prioritising hypotheses before validation in more complex biological or clinical settings. The scientific value of a cell line increases substantially when it is accompanied by a broad molecular and phenotypic profile, rather than by isolated measurements from a limited number of tests.
+
+
+Despite this importance, complete multi-omic characterisation is difficult to obtain in practice. Experimental profiling is both costly and technically demanding, with each assay often available for only a subset of samples. As a result, cancer cell line datasets are frequently sparse, heterogeneous and fragmented, with substantial variation in dimensionality, scale and missingness across omic layers. This data scarcity is a central obstacle for machine learning in biomedical research, since high-dimensional models require sufficiently representative data to generalise reliably. Deep generative models provide a natural framework for addressing these limitations, as they can learn shared representations across data modalities and use the available information to reconstruct missing measurements.
+
+The \gls{MOSA} model is a direct example of this approach. It uses an unsupervised variational autoencoder architecture to integrate heterogeneous cancer cell line datasets and generate synthetic multi-omic profiles \cite{Cai2024}. By combining several molecular and phenotypic views, the model addresses missing measurements and incomplete omic coverage, thereby expanding the available multi-omic information for 1,523 cancer cell lines.
+
+The usefulness of such reconstructions depends not only on their predictive accuracy, but also on whether their reliability can be assessed. Modern neural networks are known to produce overconfident predictions, including in settings where the input is noisy, incomplete or poorly represented in the training data \cite{Guo2017}. This limitation is particularly consequential in biomedical applications, where an apparently precise prediction may influence the selection of candidates for further experimental validation. In the context of this thesis, MOSA can reconstruct missing cancer cell line measurements across multiple omics, but the absence of a reliable associated confidence metric makes it difficult to determine which reconstructed values should be trusted and which should be interpreted cautiously.
+
+If synthetic multi-omic data is to be used for biological hypothesis generation, biomarker discovery or therapeutic target prioritisation, it should be accompanied by uncertainty estimates that indicate when the model is likely to make reliable reconstructions and when it might be predicting beyond the evidence provided by the training data. Evaluating uncertainty in MOSA is therefore an important step towards making its synthetic reconstructions more useful for biomedical research. By analysing uncertainty across omic modalities and comparing in-sample with out-of-sample reconstructions, this work aims to clarify the strengths and limitations of uncertainty estimation in cancer cell line reconstruction.
+
+\section{Document Outline}
+
+This thesis is structured in five chapters. Chapter \ref{chapter:introduction} introduces the research topic, outlines the need for uncertainty estimation in deep generative models for biological data and describes the organisation of the document. Chapter \ref{chapter:Background} presents the background and literature review, giving an overview of machine learning, neural networks and autoencoders. Additionally, it explains the concepts of uncertainty in machine learning, the state of the art in approaches for estimating uncertainty, and the Multi-Omic Synthetic Augmentation model, which serves as the basis for this work. %Chapter \ref{chapter:Data} details the multi-omic cancer cell line datasets considered in this work and the transformations applied to prepare them for analysis. 
+Chapter \ref{chapter:Uncertainty_Estimation} describes the methods used to estimate and evaluate uncertainty, including Latent Space Sampling, Monte Carlo Dropout, and the uncertainty metrics used throughout the analysis. Chapter \ref{chapter:evaluation} first describes the datasets used and the transformations applied to them, and then presents the experimental results, comparing uncertainty behaviour across omics and between in-sample and out-of-sample reconstructions for both Latent Space Sampling and Monte Carlo Dropout. Lastly, Chapter \ref{chapter:conclusion} concludes the thesis by summarising the main findings, discussing the limitations of the study and identifying possible next steps for future work.
+
+
+%A demonstration of how to use acronyms and glossary:
+
+%A \gls{MSc} entry.
+
+%Second use: \gls{IST}.
+
+%Plurals: \glspl{MSc}.
